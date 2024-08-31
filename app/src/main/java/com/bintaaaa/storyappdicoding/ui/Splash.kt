@@ -19,7 +19,7 @@ class Splash : AppCompatActivity() {
         binding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding.root)
         Handler(Looper.getMainLooper()).postDelayed({
-            val intent = Intent(this@Splash, MainActivity::class.java)
+            val intent = Intent(this@Splash, SignInActivity::class.java)
             startActivity(intent)
             finish()
         },2000)
