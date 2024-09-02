@@ -2,4 +2,6 @@
     <string name="app_name">Story App Dicoding</string>
     <string name="email_placeholder">Masukan Email Anda</string>
     <string name="password_placeholder">Masukan Kata Sandi Anda</string>
+    <string name="tv_name">Masukan Nama Anda</string>
+    <string name="sign_up">Sign Up</string>
 </resources>
