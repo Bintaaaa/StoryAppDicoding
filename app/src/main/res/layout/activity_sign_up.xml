@@ -21,7 +21,7 @@
 
 
     <com.bintaaaa.storyappdicoding.common.customWidget.TextEditingPassword
-        android:id="@+id/edt_name"
+        android:id="@+id/ed_register_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -35,7 +35,7 @@
         tools:ignore="VisualLintTextFieldSize" />
 
     <com.bintaaaa.storyappdicoding.common.customWidget.TextEditingPassword
-        android:id="@+id/edt_email"
+        android:id="@+id/ed_register_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -46,11 +46,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edt_name"
+        app:layout_constraintTop_toBottomOf="@+id/ed_register_name"
         tools:ignore="VisualLintTextFieldSize" />
 
     <com.bintaaaa.storyappdicoding.common.customWidget.TextEditingPassword
-        android:id="@+id/edt_password"
+        android:id="@+id/ed_register_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -60,7 +60,7 @@
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edt_email" />
+        app:layout_constraintTop_toBottomOf="@+id/ed_register_email" />
 
     <Button
         android:layout_width="match_parent"

@@ -20,7 +20,7 @@
 
 
     <com.bintaaaa.storyappdicoding.common.customWidget.TextEditingPassword
-        android:id="@+id/edt_email"
+        android:id="@+id/ed_register_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -29,13 +29,13 @@
         android:hint="@string/email_placeholder"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/edt_password"
+        app:layout_constraintEnd_toStartOf="@+id/ed_register_password"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <com.bintaaaa.storyappdicoding.common.customWidget.TextEditingPassword
-        android:id="@+id/edt_password"
+        android:id="@+id/ed_register_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -45,9 +45,9 @@
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/edt_email"
+        app:layout_constraintStart_toEndOf="@+id/ed_register_email"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edt_email" />
+        app:layout_constraintTop_toBottomOf="@+id/ed_register_email" />
 
     <Button
         android:id="@+id/btn_sign_in"
@@ -62,7 +62,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edt_password"
+        app:layout_constraintTop_toBottomOf="@+id/ed_register_password"
         app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
