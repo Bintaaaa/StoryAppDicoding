@@ -2,13 +2,14 @@ package com.bintaaaa.storyappdicoding.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.bintaaaa.storyappdicoding.databinding.ActivityHomeBinding
+import com.bintaaaa.storyappdicoding.databinding.ActivityStoryDetailBinding
 
-class HomeActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityHomeBinding
+class StoryDetailActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityStoryDetailBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityHomeBinding.inflate(layoutInflater)
+        binding = ActivityStoryDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
     }
 }
