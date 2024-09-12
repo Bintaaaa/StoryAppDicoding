@@ -1,4 +1,4 @@
-package com.bintaaaa.storyappdicoding.ui
+package com.bintaaaa.storyappdicoding.presentation.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
