@@ -27,8 +27,8 @@ class SignInActivity : AppCompatActivity() {
         val viewModel: AuthenticationViewModel by viewModels {
             factory
         }
-        val email = binding.edRegisterEmail.text
-        val password = binding.edRegisterPassword.text
+        val email = binding.edLoginEmail.text
+        val password = binding.edLoginPassword.text
         binding.btnSignIn.isEnabled = false
         textListener()
 
@@ -62,8 +62,8 @@ class SignInActivity : AppCompatActivity() {
    private fun textListener(){
         val textWatcher = object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-                val isUsernameFilled = binding.edRegisterEmail.text.toString().isNotEmpty()
-                val isPasswordFilled = binding.edRegisterPassword.text.toString().isNotEmpty()
+                val isUsernameFilled = binding.edLoginEmail.text.toString().isNotEmpty()
+                val isPasswordFilled = binding.edLoginPassword.text.toString().isNotEmpty()
 
                 binding.btnSignIn.isEnabled = isUsernameFilled && isPasswordFilled
             }
@@ -72,8 +72,8 @@ class SignInActivity : AppCompatActivity() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
         }
 
-        binding.edRegisterEmail.addTextChangedListener(textWatcher)
-        binding.edRegisterPassword.addTextChangedListener(textWatcher)
+        binding.edLoginEmail.addTextChangedListener(textWatcher)
+        binding.edLoginPassword.addTextChangedListener(textWatcher)
     }
 
     companion object{
