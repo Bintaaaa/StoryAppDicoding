@@ -40,7 +40,7 @@ class SignInActivity : AppCompatActivity() {
                     }
                     is Result.Success-> {
                          val pref: SharedPreferences = this@SignInActivity.getSharedPreferences(MY_PREF_NAME, Context.MODE_PRIVATE)
-                        pref.edit().putString(TOKEN,result.data.loginResult?.token.toString()).apply()
+                        pref.edit().putString(TOKEN,result.data?.loginResult?.token.toString()).apply()
                         val intent = Intent(this@SignInActivity, HomeActivity::class.java)
                         startActivity(intent)
                     }

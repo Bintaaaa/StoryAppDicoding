@@ -10,3 +10,4 @@ interface AuthenticationService {
     @POST("login")
     fun signIn(@Body body: AuthenticationBody): Call<LoginResponse>
 }
+
