@@ -10,7 +10,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.bintaaaa.storyappdicoding.common.api.Result
-import com.bintaaaa.storyappdicoding.data.models.body.AuthenticationBody
+import com.bintaaaa.storyappdicoding.data.models.body.LoginBody
 import com.bintaaaa.storyappdicoding.databinding.ActivitySignInBinding
 import com.bintaaaa.storyappdicoding.presentation.viewModel.AuthenticationViewModel
 import com.bintaaaa.storyappdicoding.presentation.viewModel.ViewModelFactory
@@ -32,8 +32,13 @@ class SignInActivity : AppCompatActivity() {
         binding.btnSignIn.isEnabled = false
         textListener()
 
+        binding.tvGoRegister.setOnClickListener{
+            val intent = Intent(this@SignInActivity, SignUpActivity::class.java)
+            startActivity(intent)
+        }
+
         binding.btnSignIn.setOnClickListener{
-            viewModel.signIn(AuthenticationBody(email = "$email", password = "$password")).observe(this){ result ->
+            viewModel.signIn(LoginBody(email = "$email", password = "$password")).observe(this){ result ->
                 when(result){
                     is Result.Loading -> {
                         binding.btnSignIn.isEnabled = false

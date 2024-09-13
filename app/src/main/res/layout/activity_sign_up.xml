@@ -29,13 +29,14 @@
         android:layout_marginEnd="16dp"
         android:hint="@string/tv_name"
         android:minHeight="48dp"
+        android:textColorHint="#546E7A"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView"
         tools:ignore="VisualLintTextFieldSize" />
 
     <com.bintaaaa.storyappdicoding.common.customWidget.TextEditingPassword
-        android:id="@+id/ed_login_email"
+        android:id="@+id/ed_register_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -43,6 +44,7 @@
         android:layout_marginEnd="16dp"
         android:hint="@string/email_placeholder"
         android:minHeight="48dp"
+        android:textColorHint="#546E7A"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -50,7 +52,7 @@
         tools:ignore="VisualLintTextFieldSize" />
 
     <com.bintaaaa.storyappdicoding.common.customWidget.TextEditingPassword
-        android:id="@+id/ed_login_password"
+        android:id="@+id/ed_register_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -58,11 +60,15 @@
         android:layout_marginEnd="16dp"
         android:hint="@string/password_placeholder"
         android:inputType="textPassword"
+        android:minHeight="48dp"
+        android:textColorHint="#546E7A"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ed_login_email" />
+        app:layout_constraintTop_toBottomOf="@+id/ed_register_email"
+        tools:ignore="VisualLintTextFieldSize" />
 
     <Button
+        android:id="@+id/btn_sign_up"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -71,7 +77,8 @@
         android:text="@string/sign_up"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="VisualLintButtonSize" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
