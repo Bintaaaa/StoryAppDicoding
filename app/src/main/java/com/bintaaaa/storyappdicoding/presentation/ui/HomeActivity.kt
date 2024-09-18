@@ -1,5 +1,6 @@
 package com.bintaaaa.storyappdicoding.presentation.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -9,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bintaaaa.storyappdicoding.common.api.Result
+import com.bintaaaa.storyappdicoding.common.`interface`.ClickListener
+import com.bintaaaa.storyappdicoding.data.models.resposne.StoryItem
 import com.bintaaaa.storyappdicoding.databinding.ActivityHomeBinding
 import com.bintaaaa.storyappdicoding.presentation.viewModel.StoryViewModel
 import com.bintaaaa.storyappdicoding.presentation.viewModel.ViewModelFactory
@@ -25,6 +28,11 @@ class HomeActivity : AppCompatActivity() {
         recyclerView.setHasFixedSize(true)
 
         fetchStory()
+
+        binding.floatingActionButton.setOnClickListener{
+            val intent = Intent(this@HomeActivity, CreatePostActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun fetchStory(){
@@ -48,6 +56,15 @@ class HomeActivity : AppCompatActivity() {
 
                    vRvStory.layoutManager = LinearLayoutManager(this)
                    vRvStory.adapter = adapter
+
+                   adapter.onSetItemClick(object : ClickListener<StoryItem>{
+                       override fun onItemClick(item: StoryItem) {
+                           val detailIntent = Intent(this@HomeActivity, StoryDetailActivity::class.java)
+                           detailIntent.putExtra(StoryDetailActivity.EXTRA_STORY_ID, item.id)
+                           startActivity(detailIntent)
+                       }
+
+                   })
                }
                is Result.Error -> {
                    vRvStory.visibility = View.GONE

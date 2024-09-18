@@ -3,7 +3,6 @@ package com.bintaaaa.storyappdicoding.common.customWidget
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.drawable.GradientDrawable
-import android.renderscript.ScriptGroup.Input
 import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher

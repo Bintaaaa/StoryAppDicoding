@@ -1,20 +1,20 @@
-package com.bintaaaa.storyappdicoding.data.models.resposne
+package com.bintaaaa.storyappdicoding.data.models.body
 
 import com.google.gson.annotations.SerializedName
 
-data class StoriesResponse(
-
-	@field:SerializedName("listStory")
-	val listStory: List<StoryItem?>? = null,
+data class StoryDetailResponse(
 
 	@field:SerializedName("error")
 	val error: Boolean? = null,
 
 	@field:SerializedName("message")
-	val message: String? = null
+	val message: String? = null,
+
+	@field:SerializedName("story")
+	val story: Story? = null
 )
 
-data class StoryItem(
+data class Story(
 
 	@field:SerializedName("photoUrl")
 	val photoUrl: String? = null,

@@ -5,4 +5,5 @@ import com.bintaaaa.storyappdicoding.repository.StoryRepository
 
 class StoryViewModel(private val storyRepository: StoryRepository): ViewModel() {
     fun stories() = storyRepository.stories()
+    fun storyDetail(storyId: String) = storyRepository.getDetailStory(storyId)
 }

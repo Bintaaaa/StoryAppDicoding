@@ -8,6 +8,7 @@ import com.bintaaaa.storyappdicoding.data.dataSources.AuthenticationService
 import com.bintaaaa.storyappdicoding.data.dataSources.StoryService
 import com.bintaaaa.storyappdicoding.data.models.body.LoginBody
 import com.bintaaaa.storyappdicoding.data.models.body.RegisterBody
+import com.bintaaaa.storyappdicoding.data.models.body.StoryDetailResponse
 import com.bintaaaa.storyappdicoding.data.models.resposne.ErrorResponse
 import com.bintaaaa.storyappdicoding.data.models.resposne.LoginResponse
 import com.bintaaaa.storyappdicoding.data.models.resposne.RegisterResponse
@@ -23,7 +24,8 @@ class StoryRepository(
 ) {
     private val signInResult = MediatorLiveData<Result<LoginResponse>>()
     private val signUpResult = MediatorLiveData<Result<RegisterResponse>>()
-    private val storyResult = MediatorLiveData<Result<StoriesResponse>>()
+    private val storiesResult = MediatorLiveData<Result<StoriesResponse>>()
+    private val storyDetailResult = MediatorLiveData<Result<StoryDetailResponse>>()
 
     fun signIn(signInBody: LoginBody): LiveData<Result<LoginResponse>>{
         signInResult.value = Result.Loading
@@ -83,31 +85,59 @@ class StoryRepository(
     }
 
     fun stories(): LiveData<Result<StoriesResponse>>{
-        storyResult.value = Result.Loading
+        storiesResult.value = Result.Loading
         val client = storyService.stories()
         client.enqueue(object : Callback<StoriesResponse>{
             override fun onResponse(call: Call<StoriesResponse>, response: Response<StoriesResponse>) {
                 if(response.isSuccessful){
                     val body = response.body()
-                    storyResult.value = Result.Success(body)
+                    storiesResult.value = Result.Success(body)
                 }else{
                     val errorBody = response.errorBody()?.string()
                     val gson = Gson()
                     try {
                         val errorResponse = gson.fromJson(errorBody, ErrorResponse::class.java)
-                        storyResult.value = Result.Error(errorResponse.message)
+                        storiesResult.value = Result.Error(errorResponse.message)
                     } catch (e: Exception) {
-                        storyResult.value = Result.Error("An unknown error occurred")
+                        storiesResult.value = Result.Error("An unknown error occurred")
                     }
                 }
             }
 
             override fun onFailure(call: Call<StoriesResponse>, t: Throwable) {
                 Log.i("Stories", "the message is ${t.message}")
-                storyResult.value = Result.Error(t.message.toString())
+                storiesResult.value = Result.Error(t.message.toString())
             }
         })
-        return  storyResult
+        return  storiesResult
+    }
+
+    fun getDetailStory(storyId: String): LiveData<Result<StoryDetailResponse>>{
+        storyDetailResult.value = Result.Loading
+        val client = storyService.detailStory(storyId)
+        client.enqueue(object : Callback<StoryDetailResponse>{
+            override fun onResponse(call: Call<StoryDetailResponse>, response: Response<StoryDetailResponse>) {
+                if(response.isSuccessful){
+                    val body = response.body()
+                    storyDetailResult.value = Result.Success(body)
+                }else{
+                    val errorBody = response.errorBody()?.string()
+                    val gson = Gson()
+                    try {
+                        val errorResponse = gson.fromJson(errorBody, ErrorResponse::class.java)
+                        storyDetailResult.value = Result.Error(errorResponse.message)
+                    } catch (e: Exception) {
+                        storyDetailResult.value = Result.Error("An unknown error occurred")
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<StoryDetailResponse>, t: Throwable) {
+                Log.i("Stories", "the message is ${t.message}")
+                storyDetailResult.value = Result.Error(t.message.toString())
+            }
+        })
+        return  storyDetailResult
     }
 
     companion object{
