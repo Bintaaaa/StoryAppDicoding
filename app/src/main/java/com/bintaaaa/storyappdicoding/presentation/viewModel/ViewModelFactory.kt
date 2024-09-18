@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.bintaaaa.storyappdicoding.injection.Injection
 import com.bintaaaa.storyappdicoding.repository.StoryRepository
 
+@Suppress("UNCHECKED_CAST")
 class ViewModelFactory private constructor(private val storyRepository: StoryRepository): ViewModelProvider.NewInstanceFactory() {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if(modelClass.isAssignableFrom(AuthenticationViewModel::class.java)){

@@ -7,7 +7,6 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.transition.Visibility
 import com.bintaaaa.storyappdicoding.common.api.Result
 import com.bintaaaa.storyappdicoding.databinding.ActivityStoryDetailBinding
 import com.bintaaaa.storyappdicoding.presentation.viewModel.StoryViewModel
