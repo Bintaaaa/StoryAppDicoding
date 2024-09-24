@@ -39,7 +39,7 @@
             android:textAlignment="center" />
     </LinearLayout>
 
-    <com.bintaaaa.storyappdicoding.common.customWidget.TextEditingPassword
+    <com.bintaaaa.storyappdicoding.common.customWidget.TextEditingCustom
         android:id="@+id/ed_add_description"
         android:layout_width="match_parent"
         android:layout_height="150dp"

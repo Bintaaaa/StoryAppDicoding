@@ -72,8 +72,10 @@ class SignUpActivity : AppCompatActivity() {
                 val isUsernameFilled = binding.edRegisterName.text.toString().isNotEmpty()
                 val isEmailFilled = binding.edRegisterEmail.text.toString().isNotEmpty()
                 val isPasswordFilled = binding.edRegisterPassword.text.toString().isNotEmpty()
+                if(binding.edRegisterEmail.error == null){
+                    binding.btnSignUp.isEnabled = isUsernameFilled && isPasswordFilled && isEmailFilled
+                }
 
-                binding.btnSignUp.isEnabled = isUsernameFilled && isPasswordFilled && isEmailFilled
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}

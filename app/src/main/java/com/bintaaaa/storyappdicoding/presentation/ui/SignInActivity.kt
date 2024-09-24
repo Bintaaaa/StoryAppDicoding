@@ -51,6 +51,7 @@ class SignInActivity : AppCompatActivity() {
                          val pref: SharedPreferences = this@SignInActivity.getSharedPreferences(MY_PREF_NAME, Context.MODE_PRIVATE)
                         pref.edit().putString(TOKEN,result.data?.loginResult?.token.toString()).apply()
                         val intent = Intent(this@SignInActivity, HomeActivity::class.java)
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
                         startActivity(intent)
                     }
                     is Result.Error ->{
@@ -73,8 +74,9 @@ class SignInActivity : AppCompatActivity() {
             override fun afterTextChanged(s: Editable?) {
                 val isUsernameFilled = binding.edLoginEmail.text.toString().isNotEmpty()
                 val isPasswordFilled = binding.edLoginPassword.text.toString().isNotEmpty()
-
-                binding.btnSignIn.isEnabled = isUsernameFilled && isPasswordFilled
+                if(binding.edLoginEmail.error == null){
+                    binding.btnSignIn.isEnabled = isUsernameFilled && isPasswordFilled
+                }
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
