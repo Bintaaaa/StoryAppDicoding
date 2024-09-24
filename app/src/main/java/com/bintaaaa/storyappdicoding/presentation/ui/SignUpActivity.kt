@@ -1,9 +1,11 @@
 package com.bintaaaa.storyappdicoding.presentation.ui
 
+import android.animation.ObjectAnimator
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -20,6 +22,8 @@ class SignUpActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        playAnimation()
 
         val factory: ViewModelFactory = ViewModelFactory.getInstance(this)
         val viewModel: AuthenticationViewModel by viewModels {
@@ -79,5 +83,13 @@ class SignUpActivity : AppCompatActivity() {
         binding.edRegisterName.addTextChangedListener(textWatcher)
         binding.edRegisterEmail.addTextChangedListener(textWatcher)
         binding.edRegisterPassword.addTextChangedListener(textWatcher)
+    }
+
+    private fun playAnimation() {
+        ObjectAnimator.ofFloat(binding.imageView, View.TRANSLATION_X, -30f, 30f).apply {
+            duration = 600
+            repeatCount = ObjectAnimator.INFINITE
+            repeatMode = ObjectAnimator.REVERSE
+        }.start()
     }
 }

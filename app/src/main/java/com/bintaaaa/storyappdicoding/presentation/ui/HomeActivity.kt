@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityOptionsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bintaaaa.storyappdicoding.common.api.Result
@@ -61,7 +62,8 @@ class HomeActivity : AppCompatActivity() {
                        override fun onItemClick(item: StoryItem) {
                            val detailIntent = Intent(this@HomeActivity, StoryDetailActivity::class.java)
                            detailIntent.putExtra(StoryDetailActivity.EXTRA_STORY_ID, item.id)
-                           startActivity(detailIntent)
+                           startActivity(detailIntent,
+                               ActivityOptionsCompat.makeSceneTransitionAnimation(this@HomeActivity).toBundle())
                        }
 
                    })
