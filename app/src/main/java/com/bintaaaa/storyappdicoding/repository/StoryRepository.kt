@@ -1,12 +1,10 @@
 package com.bintaaaa.storyappdicoding.repository
 
-import android.content.Context
-import android.net.Uri
+import android.content.SharedPreferences
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import com.bintaaaa.storyappdicoding.common.api.Result
-import com.bintaaaa.storyappdicoding.common.utils.uriToFile
 import com.bintaaaa.storyappdicoding.data.dataSources.AuthenticationService
 import com.bintaaaa.storyappdicoding.data.dataSources.StoryService
 import com.bintaaaa.storyappdicoding.data.models.body.LoginBody
@@ -20,13 +18,11 @@ import com.bintaaaa.storyappdicoding.data.models.resposne.StoriesResponse
 import com.google.gson.Gson
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.http.Multipart
 import java.io.File
 
 class StoryRepository(

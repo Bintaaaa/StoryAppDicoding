@@ -1,6 +1,7 @@
 package com.bintaaaa.storyappdicoding.presentation.ui
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -32,6 +33,14 @@ class HomeActivity : AppCompatActivity() {
 
         binding.floatingActionButton.setOnClickListener{
             val intent = Intent(this@HomeActivity, CreatePostActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.actionLogout.setOnClickListener {
+            val preferences: SharedPreferences = getSharedPreferences(SignInActivity.MY_PREF_NAME, 0)
+            preferences.edit().remove(SignInActivity.TOKEN).commit()
+            val intent =  Intent(this@HomeActivity, SignInActivity::class.java)
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
             startActivity(intent)
         }
     }
