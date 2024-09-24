@@ -1,22 +1,33 @@
 package com.bintaaaa.storyappdicoding.repository
 
+import android.content.Context
+import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import com.bintaaaa.storyappdicoding.common.api.Result
+import com.bintaaaa.storyappdicoding.common.utils.uriToFile
 import com.bintaaaa.storyappdicoding.data.dataSources.AuthenticationService
 import com.bintaaaa.storyappdicoding.data.dataSources.StoryService
 import com.bintaaaa.storyappdicoding.data.models.body.LoginBody
 import com.bintaaaa.storyappdicoding.data.models.body.RegisterBody
 import com.bintaaaa.storyappdicoding.data.models.body.StoryDetailResponse
+import com.bintaaaa.storyappdicoding.data.models.body.UploadStoryResponse
 import com.bintaaaa.storyappdicoding.data.models.resposne.ErrorResponse
 import com.bintaaaa.storyappdicoding.data.models.resposne.LoginResponse
 import com.bintaaaa.storyappdicoding.data.models.resposne.RegisterResponse
 import com.bintaaaa.storyappdicoding.data.models.resposne.StoriesResponse
 import com.google.gson.Gson
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import retrofit2.http.Multipart
+import java.io.File
 
 class StoryRepository(
     private val authenticationService: AuthenticationService,
@@ -26,6 +37,8 @@ class StoryRepository(
     private val signUpResult = MediatorLiveData<Result<RegisterResponse>>()
     private val storiesResult = MediatorLiveData<Result<StoriesResponse>>()
     private val storyDetailResult = MediatorLiveData<Result<StoryDetailResponse>>()
+    private val storyUploadResult = MediatorLiveData<Result<UploadStoryResponse>>()
+
 
     fun signIn(signInBody: LoginBody): LiveData<Result<LoginResponse>>{
         signInResult.value = Result.Loading
@@ -138,6 +151,43 @@ class StoryRepository(
             }
         })
         return  storyDetailResult
+    }
+
+    fun post(imageUri: File, description: String): LiveData<Result<UploadStoryResponse>>{
+        storyUploadResult.value = Result.Loading
+        val desc = description.toRequestBody("text/plain".toMediaType())
+        val imgReq = imageUri.asRequestBody("image/jpeg".toMediaType())
+        val multipartBody = MultipartBody.Part.createFormData(
+            "photo",
+            imageUri.name,
+            imgReq
+        )
+        val client = storyService.uploadImage(file = multipartBody,  description = desc)
+
+        client.enqueue(object : Callback<UploadStoryResponse> {
+            override fun onResponse(call: Call<UploadStoryResponse>, response: Response<UploadStoryResponse>) {
+                if(response.isSuccessful){
+                    val body = response.body()
+                    storyUploadResult.value = Result.Success(body)
+                }else{
+                    val errorBody = response.errorBody()?.string()
+                    val gson = Gson()
+                    try {
+                        val errorResponse = gson.fromJson(errorBody, ErrorResponse::class.java)
+                        storyUploadResult.value = Result.Error(errorResponse.message)
+                    } catch (e: Exception) {
+                        storyUploadResult.value = Result.Error("An unknown error occurred")
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<UploadStoryResponse>, t: Throwable) {
+                storyUploadResult.value = Result.Error(t.message.toString())
+
+                Log.i("signup", t.message.toString())
+            }
+        })
+        return storyUploadResult
     }
 
     companion object{
