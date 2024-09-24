@@ -38,7 +38,7 @@ class HomeActivity : AppCompatActivity() {
 
         binding.actionLogout.setOnClickListener {
             val preferences: SharedPreferences = getSharedPreferences(SignInActivity.MY_PREF_NAME, 0)
-            preferences.edit().remove(SignInActivity.TOKEN).commit()
+            preferences.edit().remove(SignInActivity.TOKEN).apply()
             val intent =  Intent(this@HomeActivity, SignInActivity::class.java)
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
             startActivity(intent)

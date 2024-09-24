@@ -1,9 +1,7 @@
 package com.bintaaaa.storyappdicoding.presentation.ui
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -19,13 +17,8 @@ import com.bintaaaa.storyappdicoding.common.api.Result
 import com.bintaaaa.storyappdicoding.common.utils.reduceFileImage
 import com.bintaaaa.storyappdicoding.common.utils.uriToFile
 import com.bintaaaa.storyappdicoding.databinding.ActivityCreatePostBinding
-import com.bintaaaa.storyappdicoding.presentation.ui.SignInActivity.Companion.MY_PREF_NAME
-import com.bintaaaa.storyappdicoding.presentation.ui.SignInActivity.Companion.TOKEN
 import com.bintaaaa.storyappdicoding.presentation.viewModel.StoryViewModel
 import com.bintaaaa.storyappdicoding.presentation.viewModel.ViewModelFactory
-import okhttp3.MediaType.Companion.toMediaType
-import okhttp3.RequestBody.Companion.toRequestBody
-import okhttp3.RequestBody
 
 class CreatePostActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCreatePostBinding
@@ -77,7 +70,7 @@ class CreatePostActivity : AppCompatActivity() {
             }
 
             if(description.text != null && currentImageUri != null){
-                val image = uriToFile(currentImageUri!!, this)
+                val image = uriToFile(currentImageUri!!, this).reduceFileImage()
                 viewModel.post(imageUri = image, description= description.text.toString()).observe(this){result->
                     when(result){
                         is Result.Loading -> {

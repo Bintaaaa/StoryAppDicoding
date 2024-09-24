@@ -2,8 +2,6 @@ package com.bintaaaa.storyappdicoding.presentation.viewModel
 
 import androidx.lifecycle.ViewModel
 import com.bintaaaa.storyappdicoding.repository.StoryRepository
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import java.io.File
 
 class StoryViewModel(private val storyRepository: StoryRepository): ViewModel() {
