@@ -13,4 +13,5 @@
     <string name="belum_punya_akun_daftar">Belum punya akun? Daftar</string>
     <string name="andi_malarangeng">Andi Malarangeng</string>
     <string name="selamat_datang">Selamat Datang!</string>
+    <string name="title_activity_maps">MapsActivity</string>
 </resources>

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bintaaaa.storyappdicoding.common.api.Result
 import com.bintaaaa.storyappdicoding.common.`interface`.ClickListener
+import com.bintaaaa.storyappdicoding.data.models.resposne.StoriesResponse
 import com.bintaaaa.storyappdicoding.data.models.resposne.StoryItem
 import com.bintaaaa.storyappdicoding.databinding.ActivityHomeBinding
 import com.bintaaaa.storyappdicoding.presentation.viewModel.StoryViewModel
@@ -21,6 +22,7 @@ import com.bintaaaa.storyappdicoding.presentation.viewModel.ViewModelFactory
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
     private lateinit var recyclerView: RecyclerView
+    private var stories: StoriesResponse? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
@@ -43,6 +45,12 @@ class HomeActivity : AppCompatActivity() {
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
             startActivity(intent)
         }
+
+        binding.ivMap.setOnClickListener{
+            val intent = Intent(this@HomeActivity, MapsActivity::class.java)
+            intent.putExtra(MapsActivity.EXTRA_MAP, stories)
+            startActivity(intent)
+        }
     }
 
     private fun fetchStory(){
@@ -56,13 +64,15 @@ class HomeActivity : AppCompatActivity() {
            when(result){
                is Result.Loading ->{
                    vCircular.visibility = View.VISIBLE
+                   binding.ivMap.visibility =  View.GONE
                }
                is Result.Success ->{
                    vCircular.visibility = View.GONE
+                   binding.ivMap.visibility =  View.VISIBLE
                    val adapter = StoryAdapter()
-                   val stories =result.data?.listStory
+                   stories = result.data
                    Log.i("HomeActivity", stories.toString())
-                   adapter.submitList(stories)
+                   adapter.submitList(stories?.listStory)
 
                    vRvStory.layoutManager = LinearLayoutManager(this)
                    vRvStory.adapter = adapter

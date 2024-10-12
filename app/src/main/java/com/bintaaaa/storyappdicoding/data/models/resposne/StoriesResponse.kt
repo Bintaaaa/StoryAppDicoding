@@ -1,7 +1,10 @@
 package com.bintaaaa.storyappdicoding.data.models.resposne
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class StoriesResponse(
 
 	@field:SerializedName("listStory")
@@ -12,8 +15,9 @@ data class StoriesResponse(
 
 	@field:SerializedName("message")
 	val message: String? = null
-)
+) : Parcelable
 
+@Parcelize
 data class StoryItem(
 
 	@field:SerializedName("photoUrl")
@@ -36,4 +40,4 @@ data class StoryItem(
 
 	@field:SerializedName("lat")
 	val lat: Double? = null
-)
+): Parcelable
