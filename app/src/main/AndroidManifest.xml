@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-
+    <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -13,10 +13,22 @@
         android:theme="@style/Theme.StoryAppDicoding"
         tools:targetApi="31">
         <activity
-            android:name=".ui.MainActivity"
+            android:name=".presentation.ui.CreatePostActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.Splash"
+            android:name=".presentation.ui.StoryDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.ui.HomeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.ui.SignUpActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.ui.SignInActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.ui.SplashActivity"
             android:exported="true"
             android:theme="@style/Theme.App.SplashScreen">
             <intent-filter>
@@ -25,6 +37,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <service android:name="com.google.android.gms.metadata.ModuleDependencies"
+            android:enabled="false"
+            android:exported="false"
+            tools:ignore="MissingClass">
+            <intent-filter>
+                <action android:name="com.google.android.gms.metadata.MODULE_DEPENDENCIES" />
+            </intent-filter>
+            <meta-data android:name="photopicker_activity:0:required" android:value="" />
+        </service>
     </application>
 
 </manifest>

@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">Story App Dicoding</string>
+    <string name="email_placeholder">Masukan Email Anda</string>
+    <string name="password_placeholder">Masukan Kata Sandi Anda</string>
+    <string name="tv_name">Masukan Nama Anda</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="name">Andi Malarangeng</string>
+    <string name="hint_ed_create_post">Ceritakan suasana digambar</string>
+    <string name="btn_posting">Posting</string>
+    <string name="tv_open_gallery">Buka Gallery</string>
+    <string name="sign_in">Sign In</string>
+    <string name="todo">TODO</string>
+    <string name="belum_punya_akun_daftar">Belum punya akun? Daftar</string>
+    <string name="andi_malarangeng">Andi Malarangeng</string>
+    <string name="selamat_datang">Selamat Datang!</string>
 </resources>

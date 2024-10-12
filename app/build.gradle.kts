@@ -9,6 +9,7 @@ android {
 
     buildFeatures{
         viewBinding = true
+        buildConfig = true
     }
 
     defaultConfig {
@@ -43,6 +44,11 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.converter.gson)
+    implementation(libs.glide)
+    implementation(libs.retrofit)
+    implementation(libs.logging.interceptor)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
