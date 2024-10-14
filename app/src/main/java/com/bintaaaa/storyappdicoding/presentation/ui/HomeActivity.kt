@@ -9,6 +9,9 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityOptionsCompat
+import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.PagingSource
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bintaaaa.storyappdicoding.common.api.Result
@@ -60,43 +63,54 @@ class HomeActivity : AppCompatActivity() {
         }
         val vCircular = binding.progressCircular
         val vRvStory = binding.rvStory
-       viewModel.stories().observe(this){ result ->
-           when(result){
-               is Result.Loading ->{
-                   vCircular.visibility = View.VISIBLE
-                   binding.ivMap.visibility =  View.GONE
-               }
-               is Result.Success ->{
-                   vCircular.visibility = View.GONE
-                   binding.ivMap.visibility =  View.VISIBLE
-                   val adapter = StoryAdapter()
-                   stories = result.data
-                   Log.i("HomeActivity", stories.toString())
-                   adapter.submitList(stories?.listStory)
+        val adapter = StoryAdapter()
+        vRvStory.adapter = adapter
+        vRvStory.layoutManager = LinearLayoutManager(this)
 
-                   vRvStory.layoutManager = LinearLayoutManager(this)
-                   vRvStory.adapter = adapter
 
-                   adapter.onSetItemClick(object : ClickListener<StoryItem>{
-                       override fun onItemClick(item: StoryItem) {
-                           val detailIntent = Intent(this@HomeActivity, StoryDetailActivity::class.java)
-                           detailIntent.putExtra(StoryDetailActivity.EXTRA_STORY_ID, item.id)
-                           startActivity(detailIntent,
-                               ActivityOptionsCompat.makeSceneTransitionAnimation(this@HomeActivity).toBundle())
-                       }
+        viewModel.stories().observe(this) {
+            adapter.submitData(lifecycle, it)
+            vCircular.visibility = View.GONE
+        }
 
-                   })
-               }
-               is Result.Error -> {
-                   vRvStory.visibility = View.GONE
-                   Toast.makeText(
-                       this,
-                       "Error: " + result.message,
-                       Toast.LENGTH_SHORT
-                   ).show()
-               }
-           }
-       }
+//       viewModel.stories().observe(this){ result ->
+//
+//           when(result){
+//               is PagingData. ->{
+//                   vCircular.visibility = View.VISIBLE
+//                   binding.ivMap.visibility =  View.GONE
+//               }
+//               is Result.Success ->{
+//                   vCircular.visibility = View.GONE
+//                   binding.ivMap.visibility =  View.VISIBLE
+//                   val adapter = StoryAdapter()
+//                   stories = result.data
+//                   Log.i("HomeActivity", stories.toString())
+//                   adapter.submitList(stories?.listStory)
+//
+//                   vRvStory.layoutManager = LinearLayoutManager(this)
+//                   vRvStory.adapter = adapter
+//
+//                   adapter.onSetItemClick(object : ClickListener<StoryItem>{
+//                       override fun onItemClick(item: StoryItem) {
+//                           val detailIntent = Intent(this@HomeActivity, StoryDetailActivity::class.java)
+//                           detailIntent.putExtra(StoryDetailActivity.EXTRA_STORY_ID, item.id)
+//                           startActivity(detailIntent,
+//                               ActivityOptionsCompat.makeSceneTransitionAnimation(this@HomeActivity).toBundle())
+//                       }
+//
+//                   })
+//               }
+//               is Result.Error -> {
+//                   vRvStory.visibility = View.GONE
+//                   Toast.makeText(
+//                       this,
+//                       "Error: " + result.message,
+//                       Toast.LENGTH_SHORT
+//                   ).show()
+//               }
+//           }
+//       }
 
     }
 }

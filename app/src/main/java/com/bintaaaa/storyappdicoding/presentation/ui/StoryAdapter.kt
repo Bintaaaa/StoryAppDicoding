@@ -3,6 +3,7 @@ package com.bintaaaa.storyappdicoding.presentation.ui
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -11,7 +12,7 @@ import com.bintaaaa.storyappdicoding.databinding.ItemStoryBinding
 import com.bumptech.glide.Glide
 import com.bintaaaa.storyappdicoding.common.`interface`.ClickListener as ClickListener1
 
-class StoryAdapter : ListAdapter<StoryItem, StoryAdapter.MyViewHolder>(DIFF_CALLBACK) {
+class StoryAdapter : PagingDataAdapter<StoryItem, StoryAdapter.MyViewHolder>(DIFF_CALLBACK) {
     private lateinit var onClickItem: ClickListener1<StoryItem>
 
     class MyViewHolder(private val binding: ItemStoryBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -29,9 +30,9 @@ class StoryAdapter : ListAdapter<StoryItem, StoryAdapter.MyViewHolder>(DIFF_CALL
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val story = getItem(position)
         holder.itemView.setOnClickListener {
-            onClickItem.onItemClick(story)
+            onClickItem.onItemClick(story!!)
         }
-        holder.binding(story)
+        holder.binding(story!!)
     }
     companion object {
         val DIFF_CALLBACK: DiffUtil.ItemCallback<StoryItem> =

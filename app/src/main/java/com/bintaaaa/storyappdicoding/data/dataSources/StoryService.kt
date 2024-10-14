@@ -11,10 +11,11 @@ import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface StoryService {
-    @GET("stories?location=1")
-    fun stories(): Call<StoriesResponse>
+    @GET("stories")
+    suspend fun stories(@Query("location") location: Int =1, @Query("size") size: Int, @Query("page") page: Int): StoriesResponse
 
     @GET("stories/{id}")
     fun detailStory(@Path("id")  id: String): Call<StoryDetailResponse>

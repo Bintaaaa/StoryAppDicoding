@@ -3,8 +3,13 @@ package com.bintaaaa.storyappdicoding.repository
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.liveData
 import com.bintaaaa.storyappdicoding.common.api.Result
 import com.bintaaaa.storyappdicoding.data.dataSources.AuthenticationService
+import com.bintaaaa.storyappdicoding.data.dataSources.StoryPagingSource
 import com.bintaaaa.storyappdicoding.data.dataSources.StoryService
 import com.bintaaaa.storyappdicoding.data.models.body.LoginBody
 import com.bintaaaa.storyappdicoding.data.models.body.RegisterBody
@@ -13,7 +18,7 @@ import com.bintaaaa.storyappdicoding.data.models.body.UploadStoryResponse
 import com.bintaaaa.storyappdicoding.data.models.resposne.ErrorResponse
 import com.bintaaaa.storyappdicoding.data.models.resposne.LoginResponse
 import com.bintaaaa.storyappdicoding.data.models.resposne.RegisterResponse
-import com.bintaaaa.storyappdicoding.data.models.resposne.StoriesResponse
+import com.bintaaaa.storyappdicoding.data.models.resposne.StoryItem
 import com.google.gson.Gson
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
@@ -30,7 +35,6 @@ class StoryRepository(
 ) {
     private val signInResult = MediatorLiveData<Result<LoginResponse>>()
     private val signUpResult = MediatorLiveData<Result<RegisterResponse>>()
-    private val storiesResult = MediatorLiveData<Result<StoriesResponse>>()
     private val storyDetailResult = MediatorLiveData<Result<StoryDetailResponse>>()
     private val storyUploadResult = MediatorLiveData<Result<UploadStoryResponse>>()
 
@@ -92,33 +96,17 @@ class StoryRepository(
         return signUpResult
     }
 
-    fun stories(): LiveData<Result<StoriesResponse>>{
-        storiesResult.value = Result.Loading
-        val client = storyService.stories()
-        client.enqueue(object : Callback<StoriesResponse>{
-            override fun onResponse(call: Call<StoriesResponse>, response: Response<StoriesResponse>) {
-                if(response.isSuccessful){
-                    val body = response.body()
-                    storiesResult.value = Result.Success(body)
-                }else{
-                    val errorBody = response.errorBody()?.string()
-                    val gson = Gson()
-                    try {
-                        val errorResponse = gson.fromJson(errorBody, ErrorResponse::class.java)
-                        storiesResult.value = Result.Error(errorResponse.message)
-                    } catch (e: Exception) {
-                        storiesResult.value = Result.Error("An unknown error occurred")
-                    }
-                }
+    fun getStories(): LiveData<PagingData<StoryItem>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = 5
+            ),
+            pagingSourceFactory = {
+                StoryPagingSource(storyService)
             }
-
-            override fun onFailure(call: Call<StoriesResponse>, t: Throwable) {
-                Log.i("Stories", "the message is ${t.message}")
-                storiesResult.value = Result.Error(t.message.toString())
-            }
-        })
-        return  storiesResult
+        ).liveData
     }
+
 
     fun getDetailStory(storyId: String): LiveData<Result<StoryDetailResponse>>{
         storyDetailResult.value = Result.Loading
