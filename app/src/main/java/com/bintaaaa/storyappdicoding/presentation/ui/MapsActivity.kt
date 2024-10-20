@@ -6,7 +6,6 @@ import android.os.Bundle
 import com.bintaaaa.storyappdicoding.R
 import com.bintaaaa.storyappdicoding.data.models.resposne.StoriesResponse
 
-import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
@@ -32,10 +31,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mapFragment.getMapAsync(this)
 
         stories = if (Build.VERSION.SDK_INT >= 33) {
-            intent.getParcelableExtra<StoriesResponse>(EXTRA_MAP, StoriesResponse::class.java)
+            intent.getParcelableExtra(EXTRA_MAP, StoriesResponse::class.java)
         } else {
             @Suppress("DEPRECATION")
-            intent.getParcelableExtra<StoriesResponse>(EXTRA_MAP)
+            intent.getParcelableExtra(EXTRA_MAP)
         }
     }
 
@@ -52,7 +51,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap = googleMap
         // Add a marker in Sydney and move the camera
        for (story in stories!!.listStory!!){
-           val mark = LatLng(story!!.lat!!, story.lon!!)
+           val mark = LatLng(story.lat!!, story.lon!!)
            mMap.addMarker(MarkerOptions().position(mark))
        }
     }

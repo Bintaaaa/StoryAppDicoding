@@ -2,7 +2,6 @@ package com.bintaaaa.storyappdicoding.injection
 
 import android.content.Context
 import com.bintaaaa.storyappdicoding.data.dataSources.ApiConfig
-import com.bintaaaa.storyappdicoding.data.dataSources.StoryPagingSource
 import com.bintaaaa.storyappdicoding.data.dataSources.StoryService
 import com.bintaaaa.storyappdicoding.repository.StoryRepository
 
