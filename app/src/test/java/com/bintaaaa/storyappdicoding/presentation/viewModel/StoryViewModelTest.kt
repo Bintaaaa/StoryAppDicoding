@@ -110,7 +110,7 @@ class StoryViewModelTest {
 
         differ.submitData(actualStories)
 
-        Assert.assertEquals(dummyData[2].description, differ.snapshot()[2]?.description)
+        Assert.assertEquals(dummyData[0].description, differ.snapshot()[0]?.description)
     }
 
     @Test
