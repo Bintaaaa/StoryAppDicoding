@@ -112,7 +112,7 @@ class StoryRepository(
     fun location(): LiveData<Result<StoriesResponse>> = liveData {
         emit(Result.Loading)
         try {
-            val response = storyService.location();
+            val response = storyService.location()
             emit(Result.Success(response))
         } catch (e: Exception) {
             Log.d("Story Repository", "location: ${e.message.toString()} ")

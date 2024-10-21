@@ -83,7 +83,6 @@ class CreatePostActivity : AppCompatActivity() {
                                 "Berhasil Membuat Story",
                                 Toast.LENGTH_SHORT
                             ).show()
-                            viewModel.stories()
                             val intent = Intent()
                             setResult(Activity.RESULT_OK, intent)
                             finish()

@@ -15,7 +15,7 @@ import retrofit2.http.Query
 
 interface StoryService {
     @GET("stories")
-    suspend fun stories(@Query("location") location: Int =1, @Query("size") size: Int, @Query("page") page: Int): StoriesResponse
+    suspend fun stories(@Query("size") size: Int, @Query("page") page: Int): StoriesResponse
 
     @GET("stories")
     suspend fun location(@Query("location") location: Int =1): StoriesResponse

@@ -2,7 +2,6 @@ package com.bintaaaa.storyappdicoding.presentation.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
 import com.bintaaaa.storyappdicoding.R
