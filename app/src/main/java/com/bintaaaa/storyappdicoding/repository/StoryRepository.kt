@@ -3,6 +3,7 @@ package com.bintaaaa.storyappdicoding.repository
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.liveData
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
@@ -18,6 +19,7 @@ import com.bintaaaa.storyappdicoding.data.models.body.UploadStoryResponse
 import com.bintaaaa.storyappdicoding.data.models.resposne.ErrorResponse
 import com.bintaaaa.storyappdicoding.data.models.resposne.LoginResponse
 import com.bintaaaa.storyappdicoding.data.models.resposne.RegisterResponse
+import com.bintaaaa.storyappdicoding.data.models.resposne.StoriesResponse
 import com.bintaaaa.storyappdicoding.data.models.resposne.StoryItem
 import com.google.gson.Gson
 import okhttp3.MediaType.Companion.toMediaType
@@ -105,6 +107,17 @@ class StoryRepository(
                 StoryPagingSource(storyService)
             }
         ).liveData
+    }
+
+    fun location(): LiveData<Result<StoriesResponse>> = liveData {
+        emit(Result.Loading)
+        try {
+            val response = storyService.location();
+            emit(Result.Success(response))
+        } catch (e: Exception) {
+            Log.d("Story Repository", "location: ${e.message.toString()} ")
+            emit(Result.Error(e.message.toString()))
+        }
     }
 
 

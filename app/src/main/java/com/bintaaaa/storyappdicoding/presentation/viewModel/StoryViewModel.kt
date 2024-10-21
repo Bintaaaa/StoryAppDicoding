@@ -11,6 +11,7 @@ import java.io.File
 
 class StoryViewModel(private val storyRepository: StoryRepository): ViewModel() {
     fun stories(): LiveData<PagingData<StoryItem>> = storyRepository.getStories().cachedIn(viewModelScope)
+    fun location() = storyRepository.location()
     fun storyDetail(storyId: String) = storyRepository.getDetailStory(storyId)
     fun post(imageUri: File, description: String) = storyRepository.post(imageUri, description)
 }

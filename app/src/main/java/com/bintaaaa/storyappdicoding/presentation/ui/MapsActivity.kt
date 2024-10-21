@@ -1,10 +1,13 @@
 package com.bintaaaa.storyappdicoding.presentation.ui
 
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
+import androidx.activity.viewModels
 import com.bintaaaa.storyappdicoding.R
-import com.bintaaaa.storyappdicoding.data.models.resposne.StoriesResponse
+import com.bintaaaa.storyappdicoding.common.api.Result
+import com.bintaaaa.storyappdicoding.data.models.resposne.StoryItem
 
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -12,13 +15,20 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.bintaaaa.storyappdicoding.databinding.ActivityMapsBinding
+import com.bintaaaa.storyappdicoding.presentation.viewModel.StoryViewModel
+import com.bintaaaa.storyappdicoding.presentation.viewModel.ViewModelFactory
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.model.LatLngBounds
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
     private lateinit var binding: ActivityMapsBinding
-    private var stories: StoriesResponse? = null
 
+    private val factory: ViewModelFactory = ViewModelFactory.getInstance(this)
+    val viewModel: StoryViewModel by viewModels {
+        factory
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -30,12 +40,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
-        stories = if (Build.VERSION.SDK_INT >= 33) {
-            intent.getParcelableExtra(EXTRA_MAP, StoriesResponse::class.java)
-        } else {
-            @Suppress("DEPRECATION")
-            intent.getParcelableExtra(EXTRA_MAP)
-        }
     }
 
     /**
@@ -49,14 +53,41 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
      */
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-        // Add a marker in Sydney and move the camera
-       for (story in stories!!.listStory!!){
-           val mark = LatLng(story.lat!!, story.lon!!)
-           mMap.addMarker(MarkerOptions().position(mark))
-       }
+
+        viewModel.location().observe(this) {
+            if (it != null) {
+                when(it) {
+                    is Result.Success -> {
+                        addManyMarkers(it.data?.listStory!!)
+                    }
+                    is Result.Loading -> {
+                    }
+                    is Result.Error -> {
+                        Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
+                    }
+                }
+            }
+        }
+
     }
 
-    companion object{
-        const val EXTRA_MAP = "extra_map"
+    private val boundsBuilder = LatLngBounds.Builder()
+    private fun addManyMarkers(stories: List<StoryItem>) {
+        stories.forEach { item ->
+            val latLng = LatLng(item.lat!!, item.lon!!)
+            mMap.addMarker(MarkerOptions().position(latLng).title(item.name))
+            boundsBuilder.include(latLng)
+        }
+
+        val bounds: LatLngBounds = boundsBuilder.build()
+
+        mMap.animateCamera(
+            CameraUpdateFactory.newLatLngBounds(
+                bounds,
+                resources.displayMetrics.widthPixels,
+                resources.displayMetrics.heightPixels,
+                30
+            )
+        )
     }
 }
