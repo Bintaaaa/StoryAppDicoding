@@ -55,28 +55,9 @@ class StoryViewModelTest {
         Dispatchers.resetMain() // Mengembalikan Dispatcher ke keadaan semula
     }
 
-    @Test
-    fun `When Get Stories Should Not Null and Return Success`(){
-        val observer = Observer<PagingData<StoryItem>>{}
-        try{
-            val expectedStory = MutableLiveData<PagingData<StoryItem>>()
-            expectedStory.value = PagingData.from(dummyData)
-
-            `when` (storyRepository.getStories()).thenReturn(expectedStory)
-
-
-            val actualStory = storyViewModel.stories().observeForever(observer)
-
-            Mockito.verify(storyRepository).getStories()
-            Assert.assertNotNull(actualStory)
-        }finally {
-            storyViewModel.stories().removeObserver(observer)
-        }
-    }
-
 
     @Test
-    fun `when getStories Should Return 5 Data and Return Success`() = runTest {
+    fun `When Get Stories Should Not Null and Return Success`() = runTest {
         val expectedStories = createPagingDataLiveData(dummyData)
 
         `when`(storyRepository.getStories()).thenReturn(expectedStories)
@@ -91,26 +72,9 @@ class StoryViewModelTest {
 
         differ.submitData(actualStories)
 
+        Assert.assertNotNull(differ.snapshot())
         Assert.assertEquals(dummyData.size, differ.snapshot().size)
-    }
-
-    @Test
-    fun `when getStories Should Return Equals Data and Return Success`() = runTest {
-        val expectedStories = createPagingDataLiveData(dummyData)
-
-        `when`(storyRepository.getStories()).thenReturn(expectedStories)
-
-        val actualStories: PagingData<StoryItem> = storyViewModel.stories().getOrAwaitValue()
-
-        val differ = AsyncPagingDataDiffer(
-            diffCallback = StoryAdapter.DIFF_CALLBACK,
-            updateCallback = noopListUpdateCallback,
-            workerDispatcher = Dispatchers.Main,
-        )
-
-        differ.submitData(actualStories)
-
-        Assert.assertEquals(dummyData[0].description, differ.snapshot()[0]?.description)
+        Assert.assertEquals(dummyData[0], differ.snapshot()[0])
     }
 
     @Test
